@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.concurrent.TimeUnit;
 
 import static constants.BasicConstants.*;
+import static generalMethods.General.*;
 
 public class AccountLoginRegistration {
 
@@ -27,8 +28,8 @@ public class AccountLoginRegistration {
     public void theUserShouldBeAbleToLogin() {
         browser.navigate().to(URL_APLIKACE);
 
-        goToLoginPage();
-        logIn("karel.franta.hotel@gmail.com", "theAnswerIs42");
+        goToLoginPage(browser);
+        logIn(browser, "karel.franta.hotel@gmail.com", "theAnswerIs42");
 
         WebElement loggedInBtn = browser.findElement(By.xpath("//div/ul/li/button/span[" + xpathClassNamePrefix("account_user_name") + "]"));
         Assertions.assertEquals("Karel", loggedInBtn.getText(), "Login FAILED");
@@ -38,8 +39,8 @@ public class AccountLoginRegistration {
     public void theUserShouldBeAbleToUseBasicLinks() {
         browser.navigate().to(URL_APLIKACE);
 
-        goToLoginPage();
-        logIn("karel.franta.hotel@gmail.com", "theAnswerIs42");
+        goToLoginPage(browser);
+        logIn(browser, "karel.franta.hotel@gmail.com", "theAnswerIs42");
 
         WebElement orderHistoryBtn = browser.findElement(By.xpath("//a[@title='Orders']"));
         orderHistoryBtn.click();
@@ -56,7 +57,7 @@ public class AccountLoginRegistration {
 
         Assertions.assertEquals("CREDIT SLIPS", creditSlipsHeader.getText());
 
-        WebElement backToYourAccountFromCreditBtn  = browser.findElement(By.xpath("/html/body/div/div[2]/div/div[2]/div/ul/li[1]/a"));
+        WebElement backToYourAccountFromCreditBtn = browser.findElement(By.xpath("/html/body/div/div[2]/div/div[2]/div/ul/li[1]/a"));
         backToYourAccountFromCreditBtn.click();
 
         WebElement myAddresses = browser.findElement(By.xpath("//a[@title='Addresses']"));
@@ -72,31 +73,5 @@ public class AccountLoginRegistration {
         browser.close();
     }
 
-    //--------------------------------
 
-    public void goToLoginPage() {
-        WebElement logInBtn = browser.findElement(By.className("user_login"));
-        logInBtn.click();
-    }
-
-    public void logIn(String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
-        clickOnLogInBtn();
-    }
-
-    public void enterEmail(String email) {
-        WebElement emailField = browser.findElement(By.id("email"));
-        emailField.sendKeys(email);
-    }
-
-    public void enterPassword(String password) {
-        WebElement passwordField = browser.findElement(By.id("passwd"));
-        passwordField.sendKeys(password);
-    }
-
-    public void clickOnLogInBtn() {
-        WebElement singInBtn = browser.findElement(By.id("SubmitLogin"));
-        singInBtn.click();
-    }
 }
