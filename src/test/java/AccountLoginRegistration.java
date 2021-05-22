@@ -68,6 +68,55 @@ public class AccountLoginRegistration {
         Assertions.assertEquals("MY ADDRESSES", myAddressesHeader.getText());
     }
 
+    @Test
+    public void logOutFromDropdownInMainMenu() {
+        browser.navigate().to(URL_APLIKACE);
+
+        goToLoginPage(browser);
+        logIn(browser, "karel.franta.hotel@gmail.com", "theAnswerIs42");
+
+        WebElement loggedInBtn = browser.findElement(By.xpath("//div/ul/li/button/span[" + xpathClassNamePrefix("account_user_name") + "]"));
+        Assertions.assertEquals("Karel", loggedInBtn.getText(), "Login FAILED");
+
+        WebElement buttonAccount = browser.findElement(By.xpath("//li/button/span[1]"));
+        buttonAccount.click();
+
+        WebElement logOut = browser.findElement(By.xpath("//li/ul/li[3]/a"));
+        logOut.click();
+
+        WebElement logInBtn = browser.findElement(By.className("user_login"));
+        Assertions.assertEquals("Sign in", logInBtn.getText(), "login FAILED");
+    }
+
+    @Test
+    public void signInFromAuthenticationPage() {
+        browser.navigate().to(URL_APLIKACE);
+
+        goToLoginPage(browser);
+        logIn(browser, "karel.franta.hotel@gmail.com", "theAnswerIs42");
+
+        WebElement loggedInBtn = browser.findElement(By.xpath("//div/ul/li/button/span[" + xpathClassNamePrefix("account_user_name") + "]"));
+        Assertions.assertEquals("Karel", loggedInBtn.getText(), "Login FAILED");
+    }
+
+    @Test
+    public void fixTheProblemOfForgottenPasswordFromAuthenticationPage() {
+        browser.navigate().to("http://czechitas-datestovani-hackathon.cz/en/login?back=my-account");
+
+        WebElement buttonAccount = browser.findElement(By.xpath("//*[@id=\"login_form\"]/div/p[1]/a"));
+        buttonAccount.click();
+
+        WebElement fieldForgotPassword = browser.findElement(By.xpath("//*[@id=\"email\"]"));
+        fieldForgotPassword.sendKeys("karel.franta.hotel@gmail.com");
+
+        WebElement buttonRetrievePassword = browser.findElement(By.xpath("//*[@id=\"form_forgotpassword\"]/fieldset/p/button"));
+        buttonRetrievePassword.click();
+
+        WebElement confirmationForgotPassword = browser.findElement(By.xpath("/html/body/div/div[2]/div/div[2]/div/div/p"));
+        Assertions.assertEquals("A confirmation email has been sent to your address: karel.franta.hotel@gmail.com", confirmationForgotPassword.getText(), "Login FAILED");
+    }
+
+
     @AfterEach
     public void tearDown() {
         browser.close();
