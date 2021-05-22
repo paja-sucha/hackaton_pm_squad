@@ -38,7 +38,7 @@ public class ReservationProces {
     */
 
     @Test
-    public void shouldDo() {
+    public void theUserShouldBeAbleToSearchForAvailableRooms() {
         browser.navigate().to(URL_APLIKACE);
 
         WebElement selectHotelBtn = browser.findElement(By.id("hotel_cat_name"));
