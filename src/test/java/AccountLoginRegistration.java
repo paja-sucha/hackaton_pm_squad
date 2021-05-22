@@ -116,6 +116,20 @@ public class AccountLoginRegistration {
         Assertions.assertEquals("A confirmation email has been sent to your address: karel.franta.hotel@gmail.com", confirmationForgotPassword.getText(), "Login FAILED");
     }
 
+    @Test
+    public void CreateAnAccountFromAuthenticationPage() {
+        browser.navigate().to("http://czechitas-datestovani-hackathon.cz/en/login?back=my-account");
+
+        WebElement createEmail = browser.findElement(By.xpath("//*[@id=\"email_create\"]"));
+        createEmail.sendKeys("mm@gmail.com");
+
+        WebElement buttonCreate = browser.findElement(By.xpath("//*[@id=\"SubmitCreate\"]"));
+        buttonCreate.click();
+
+        WebElement confirmationCreateAccount = browser.findElement(By.xpath("//*[@id=\"submitAccount\"]"));
+        Assertions.assertEquals("Register ", confirmationCreateAccount.getText(), "Login FAILED");
+    }
+
 
     @AfterEach
     public void tearDown() {
