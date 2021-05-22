@@ -2,7 +2,7 @@ package constants;
 
 public class BasicConstants {
     //--------- URL CONSTANTS
-    public static final String URL_APLIKACE = "https://text/";
+    public static final String URL_APLIKACE = "http://czechitas-datestovani-hackathon.cz/en/";
 
     //--------- XPATH
     public static String xpathClassNamePrefix(String htmlClass) {
